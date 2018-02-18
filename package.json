@@ -1,0 +1,26 @@
+{
+  "name": "l10n-populate",
+  "version": "1.0.0",
+  "description": "a node commande line tool to inject translation into static files from json",
+  "main": "index.js",
+  "bin": {
+    "l10n-populate": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurentChin/l10n-populate.git"
+  },
+  "keywords": [
+    "l10n",
+    "cli"
+  ],
+  "author": "Laurent Janet <laurent.janet@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laurentChin/l10n-populate/issues"
+  },
+  "homepage": "https://github.com/laurentChin/l10n-populate#readme"
+}
