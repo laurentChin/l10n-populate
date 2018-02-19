@@ -1,7 +1,7 @@
 {
   "name": "l10n-populate",
   "version": "1.0.0",
-  "description": "a node commande line tool to inject translation into static files from json",
+  "description": "a node command line tool to inject translation into static files from json",
   "main": "index.js",
   "bin": {
     "l10n-populate": "./index.js"
@@ -35,5 +35,8 @@
     "eslint-plugin-standard": "^3.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.9.0"
+  },
+  "dependencies": {
+    "commander": "^2.14.1"
   }
 }
