@@ -7,7 +7,7 @@
     "l10n-populate": "./index.js"
   },
   "scripts": {
-    "test": "tape tests/**/*.tests.js | tap-spec"
+    "test": "eslint src/**/*.js tests/**/*.js index.js; exit 0; tape tests/**/*.tests.js | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,12 @@
   },
   "homepage": "https://github.com/laurentChin/l10n-populate#readme",
   "devDependencies": {
+    "eslint": "^4.18.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.9.0"
   }
