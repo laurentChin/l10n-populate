@@ -8,7 +8,8 @@
   },
   "scripts": {
     "pretest": "eslint src/**/*.js tests/**/*.js index.js; exit 0;",
-    "test": "tape tests/**/*.tests.js | tap-spec"
+    "test": "tape tests/**/*.tests.js | tap-spec",
+    "watch": "npm test && chokidar 'src/***/*js' 'tests/**/*.js' 'index.js' -c 'npm test'"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/laurentChin/l10n-populate#readme",
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
     "eslint": "^4.18.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.8.0",
