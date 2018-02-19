@@ -7,7 +7,8 @@
     "l10n-populate": "./index.js"
   },
   "scripts": {
-    "test": "eslint src/**/*.js tests/**/*.js index.js; exit 0; tape tests/**/*.tests.js | tap-spec"
+    "pretest": "eslint src/**/*.js tests/**/*.js index.js; exit 0;",
+    "test": "tape tests/**/*.tests.js | tap-spec"
   },
   "repository": {
     "type": "git",
