@@ -15,6 +15,6 @@ program
   .parse(process.argv);
 
 if (!inputValidator.isValid(path.join(__dirname, program.input))) {
-  console.log(colors.red(`The programm will now exist because '${program.input}' doesn't seems to be a valid file or directory`));
+  console.log(colors.red(`The program will now exit because '${program.input}' doesn't seems to be a valid file or directory`));
   process.exit(1);
 }
