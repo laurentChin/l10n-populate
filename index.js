@@ -6,7 +6,9 @@ const colors = require('colors/safe');
 
 const path = require('path');
 const fs = require('fs');
+
 const inputValidator = require('./src/validators/input');
+const contentValidator = require('./src/validators/content');
 
 program
   .version('1.0.0', '-v, --version')
@@ -28,9 +30,18 @@ if (!inputValidator.isValid(absolutePath)) {
 if (fs.statSync(absolutePath).isDirectory()) {
   fs.readdirSync(absolutePath)
     .forEach((file) => {
-      if (inputValidator.isValid(path.join(absolutePath, file))) {
+      const filePath = path.join(absolutePath, file);
+      let isValid = inputValidator.isValid(filePath); // validate the filename and extension
+
+      if (isValid && !contentValidator.isValid(fs.readFileSync(filePath))) { // validate the file content
         console.log(invalidInputErrorMessage);
         process.exit(1);
       }
     });
+}
+
+// If the input is a file check that it contains a JSON content
+if (!fs.statSync(absolutePath).isDirectory() && !contentValidator.isValid(fs.readFileSync(absolutePath))) {
+  console.log(invalidInputErrorMessage);
+  process.exit(1);
 }
