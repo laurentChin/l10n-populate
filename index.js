@@ -28,7 +28,7 @@ if (!inputValidator.isValid(absolutePath)) {
 if (fs.statSync(absolutePath).isDirectory()) {
   fs.readdirSync(absolutePath)
     .forEach((file) => {
-      if(inputValidator.isValid(path.join(absolutePath, file))) {
+      if (inputValidator.isValid(path.join(absolutePath, file))) {
         console.log(invalidInputErrorMessage);
         process.exit(1);
       }
