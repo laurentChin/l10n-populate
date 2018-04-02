@@ -8,7 +8,7 @@
   },
   "scripts": {
     "pretest": "eslint src/**/*.js tests/**/*.js index.js; exit 0;",
-    "test": "tape tests/**/*.tests.js | tap-spec",
+    "test": "tape tests/*.tests.js tests/**/*.tests.js | tap-spec",
     "watch": "npm test && chokidar 'src/***/*js' 'tests/**/*.js' 'index.js' -c 'npm test'"
   },
   "repository": {
