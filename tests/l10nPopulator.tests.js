@@ -113,3 +113,23 @@ test('l10nPopulator.composeKey() must return a composed string when it\'s second
     'baseKey.expectedKey'
   );
 });
+
+test('l10nPopulator must own a populate function', t => {
+  t.plan(1);
+
+  t.ok(l10nPopulator.hasOwnProperty('populate'));
+});
+
+test('l10nPopulator.populate must replace the tokens in the \'source\' argument with the corresponding one of the \'translations\' argument', t => {
+  t.plan(1);
+
+  const map = new Map();
+  map.set('rootObject.level1', 'level1 translation');
+  map.set('rootObject.childObject.level2', 'level2 translation');
+
+  t.isEqual(
+    l10nPopulator.populate('the translation of level1 is {{rootObject.level1}}, the translation of level2 is {{rootObject.childObject.level2}}', map),
+    'the translation of level1 is level1 translation, the translation of level2 is level2 translation',
+    'the token {{rootObject.level1}} must be replaced with \'level1 translation\', the token {{rootObject.childObject.level2}} must be replaced with \'level2 translation\''
+  );
+});

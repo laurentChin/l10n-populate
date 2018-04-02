@@ -20,7 +20,18 @@ function composeKey (currentKey, keyPrefix = '') {
   }
 }
 
+function populate (source, translations) {
+  let sourceCopy = source;
+
+  translations.forEach((value, key) => {
+    sourceCopy = sourceCopy.replace(`{{${key}}}`, value);
+  });
+
+  return sourceCopy;
+}
+
 module.exports = {
   composeKey,
-  buildMap
+  buildMap,
+  populate
 };
