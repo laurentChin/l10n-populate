@@ -17,7 +17,7 @@ program
   .option('-o, --output [directory]', 'The name of the directory where you want to save the generated file(s)', 'dist')
   .parse(process.argv);
 
-const absolutePath = path.join(__dirname, program.input);
+const absolutePath = path.join(process.env.PWD, program.input);
 const invalidInputErrorMessage = colors.red(`The program will now exit because '${program.input}' doesn't seems to be or contains valid file(s)`);
 
 // Check that the input is a valid file (name and extension) or a directory
