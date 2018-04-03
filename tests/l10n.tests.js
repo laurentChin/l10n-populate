@@ -1,11 +1,11 @@
 const test = require('tape');
 
-const l10nPopulator = require('../src/l10nPopulator');
+const l10n = require('../src/l10n');
 
-test('l10nPopulator must own a buildMap function', t => {
+test('l10n must own a buildMap function', t => {
   t.plan(1);
 
-  t.ok(l10nPopulator.hasOwnProperty('buildMap'));
+  t.ok(l10n.hasOwnProperty('buildMap'));
 });
 
 test('buildMap() must return a copy of the original Map given as argument', t => {
@@ -19,7 +19,7 @@ test('buildMap() must return a copy of the original Map given as argument', t =>
     stringKey: 'value'
   };
 
-  const mapCopy = l10nPopulator.buildMap(originalMap, translations);
+  const mapCopy = l10n.buildMap(originalMap, translations);
 
   t.isEqual(originalMap.size, 2, 'originalMap.size must equal 2');
   t.isEqual(originalMap.get('key1'), 1, 'originalMap.get(\'key1\') must equal 1');
@@ -45,7 +45,7 @@ test('buildMap() must return a Map containing string keys with a dot separator f
     }
   };
 
-  const buildedMap = l10nPopulator.buildMap(map, translations);
+  const buildedMap = l10n.buildMap(map, translations);
   t.ok(
     buildedMap.has('rootObject.level1'),
     'buildedMap has a rootObject.level1 key'
@@ -90,37 +90,37 @@ test('buildMap() must return a Map containing string keys with a dot separator f
   );
 });
 
-test('l10nPopulator must own a composeKey function', t => {
+test('l10n must own a composeKey function', t => {
   t.plan(1);
 
-  t.ok(l10nPopulator.hasOwnProperty('composeKey'));
+  t.ok(l10n.hasOwnProperty('composeKey'));
 });
 
-test('l10nPopulator.composeKey() must return a simple string when it\'s second argument is not given', t => {
+test('l10n.composeKey() must return a simple string when it\'s second argument is not given', t => {
   t.plan(1);
 
   t.equal(
-    l10nPopulator.composeKey('expectedKey'),
+    l10n.composeKey('expectedKey'),
     'expectedKey'
   );
 });
 
-test('l10nPopulator.composeKey() must return a composed string when it\'s second argument is given', t => {
+test('l10n.composeKey() must return a composed string when it\'s second argument is given', t => {
   t.plan(1);
 
   t.equal(
-    l10nPopulator.composeKey('expectedKey', 'baseKey'),
+    l10n.composeKey('expectedKey', 'baseKey'),
     'baseKey.expectedKey'
   );
 });
 
-test('l10nPopulator must own a populate function', t => {
+test('l10n must own a populate function', t => {
   t.plan(1);
 
-  t.ok(l10nPopulator.hasOwnProperty('populate'));
+  t.ok(l10n.hasOwnProperty('populate'));
 });
 
-test('l10nPopulator.populate must replace the tokens in the \'source\' argument with the corresponding one of the \'translations\' argument', t => {
+test('l10n.populate must replace the tokens in the \'source\' argument with the corresponding one of the \'translations\' argument', t => {
   t.plan(1);
 
   const map = new Map();
@@ -128,7 +128,7 @@ test('l10nPopulator.populate must replace the tokens in the \'source\' argument 
   map.set('rootObject.childObject.level2', 'level2 translation');
 
   t.isEqual(
-    l10nPopulator.populate('the translation of level1 is {{rootObject.level1}}, the translation of level2 is {{rootObject.childObject.level2}}', map),
+    l10n.populate('the translation of level1 is {{rootObject.level1}}, the translation of level2 is {{rootObject.childObject.level2}}', map),
     'the translation of level1 is level1 translation, the translation of level2 is level2 translation',
     'the token {{rootObject.level1}} must be replaced with \'level1 translation\', the token {{rootObject.childObject.level2}} must be replaced with \'level2 translation\''
   );
