@@ -1,14 +1,32 @@
 const fs = require('fs');
 
-function createFile (fs, target, content) {
-  try {
-    const fd = fs.openSync(target, 'w');
+function createFile (fs, target, content, retry = true) {
+  return new Promise((resolve, reject) => {
+    fs.open(target, 'w', (err) => {
+      if (err && retry) {
+        let path = target.split('/');
+        path.pop();
+        path = path.join('/');
 
-    if (!fd) throw new Error(`Creation of ${target} failed.`);
-    fs.writeFileSync(target, content);
-  } catch (e) {
-    throw e;
-  }
+        /**
+         * create the missing directory tree
+         */
+        if (createMissingDir(fs, path)) {
+          /**
+           * retry the file creation
+           */
+          createFile(fs, target, content, true);
+        }
+      } else if (err && !retry) {
+        reject(err);
+      }
+
+      fs.writeFile(target, content, (err) => {
+        if (err) reject(err);
+        resolve(true);
+      });
+    });
+  });
 }
 
 function buildPath (filename, targetPath, subDirectory = '') {

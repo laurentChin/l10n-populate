@@ -17,19 +17,23 @@ test(
     const target = `/tmp/test.html`;
     const content = '<html><head><title>title</title></head><body><p>body</p></body></html>';
 
-    output.createFile(target, content);
+    output.createFile(target, content)
+      .then(() => {
+        try {
+          t.notEqual(
+            fs.statSync(target),
+            undefined
+          );
 
-    try {
-      t.notEqual(
-        fs.statSync(target),
-        undefined
-      );
-
-      t.notEqual(fs.readFileSync(target, 'utf8'), '', 'created file must not be empty');
-      t.equal(fs.readFileSync(target, 'utf8'), content, 'created file must contain the given content');
-    } catch (e) {
-      t.fail('must create a file at the given path');
-    }
+          t.notEqual(fs.readFileSync(target, 'utf8'), '', 'created file must not be empty');
+          t.equal(fs.readFileSync(target, 'utf8'), content, 'created file must contain the given content');
+        } catch (e) {
+          t.fail('must create a file at the given path');
+        }
+      })
+      .catch(() => {
+        t.fail('must create a file at the given path');
+      })
 
   }
 );
