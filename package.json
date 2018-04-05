@@ -17,7 +17,8 @@
   },
   "keywords": [
     "l10n",
-    "cli"
+    "cli",
+    "tape"
   ],
   "author": "Laurent Janet <laurent.janet@gmail.com>",
   "license": "MIT",
