@@ -1,4 +1,5 @@
 const test = require('tape');
+const fs = require('fs');
 
 const l10n = require('../src/l10n');
 
@@ -120,6 +121,38 @@ test('l10n must own a populate function', t => {
   t.ok(l10n.hasOwnProperty('populate'));
 });
 
+test('l10n must own a lookup function', t => {
+  t.plan(1);
+
+  t.ok(l10n.hasOwnProperty('lookup'));
+});
+
+test('l10n.lookup() must return a map containing two values', t => {
+  t.plan(4);
+  const lookupResult = l10n.lookup(`${process.env.PWD}/tests/__fixtures__/l10n`);
+
+  t.equal(
+    lookupResult.size,
+    2,
+    'lookup returned Map size must equal 2'
+  );
+
+  t.ok(
+    lookupResult.has('fr.json'),
+    'lookup return Map must contains a fr.json key'
+  );
+
+  t.ok(
+    (typeof lookupResult.get('fr.json') === 'object' && typeof lookupResult.get('en.json') === 'object'),
+    'lookup return Map must contain object as value for all keys'
+  );
+
+  t.ok(
+    lookupResult.has('en.json'),
+    'lookup return Map must contains an en.json key'
+  );
+});
+
 test('l10n.populate must replace the tokens in the \'source\' argument with the corresponding one of the \'translations\' argument', t => {
   t.plan(1);
 
@@ -132,4 +165,47 @@ test('l10n.populate must replace the tokens in the \'source\' argument with the 
     'the translation of level1 is level1 translation, the translation of level2 is level2 translation',
     'the token {{rootObject.level1}} must be replaced with \'level1 translation\', the token {{rootObject.childObject.level2}} must be replaced with \'level2 translation\''
   );
+});
+
+test('l10n must own a process method', t => {
+  t.plan(1);
+  t.ok(l10n.hasOwnProperty('process'));
+});
+
+test('l10n.process must files in a /tmp directory', t => {
+  t.plan(1);
+
+  const l10nSrc = `${process.env.PWD}/tests/__fixtures__/l10n`;
+  const templateSrc = `${process.env.PWD}/tests/__fixtures__/templates`;
+  const targetPath = `${process.env.PWD}/tmp`;
+
+  l10n.process(l10nSrc, templateSrc, targetPath)
+    .then(() => {
+      t.equal(
+        fs.readdirSync(targetPath).length,
+        2,
+        '/tmp/dist must contains three files'
+      );
+
+      fs.unlinkSync(`${process.env.PWD}/tmp/fr/page_1.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/fr/page_2.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/fr/sub_level1/page_3.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/fr/sub_level1/sub_level2/page_4.html`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/fr/sub_level1/sub_level2`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/fr/sub_level1`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/fr`);
+
+      fs.unlinkSync(`${process.env.PWD}/tmp/en/page_1.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/en/page_2.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/en/sub_level1/page_3.html`);
+      fs.unlinkSync(`${process.env.PWD}/tmp/en/sub_level1/sub_level2/page_4.html`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/en/sub_level1/sub_level2`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/en/sub_level1`);
+      fs.rmdirSync(`${process.env.PWD}/tmp/en`);
+
+      fs.rmdirSync(`${process.env.PWD}/tmp`);
+    })
+    .catch(() => {
+      t.fail('must create a file at the given path');
+    });
 });
