@@ -1,12 +1,7 @@
 const fs = require('fs');
 
 function lookup(fs, templateDirectoryPath, templateRootPath = '', previousMap = '') {
-  let map;
-  if (previousMap) {
-    map = new Map(previousMap);
-  } else {
-    map = new Map();
-  }
+  let map = previousMap ? new Map(previousMap) : new Map();
 
   if (templateRootPath === '') {
     templateRootPath = templateDirectoryPath;
@@ -15,8 +10,7 @@ function lookup(fs, templateDirectoryPath, templateRootPath = '', previousMap = 
   const files = fs.readdirSync(templateDirectoryPath);
   files.forEach((file) => {
     const filePath = `${templateDirectoryPath}/${file}`;
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
+    if (fs.statSync(filePath).isDirectory()) {
       map = lookup(fs, filePath, templateRootPath, map);
     } else {
       map.set(pathCleanup(filePath, templateRootPath), fs.readFileSync(filePath, 'utf8'));
