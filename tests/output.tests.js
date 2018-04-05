@@ -65,3 +65,23 @@ test(
     );
   }
 );
+
+test('output must own a createMissingDir method', t => {
+  t.plan(1);
+
+  t.ok(output.hasOwnProperty('createMissingDir'));
+});
+
+test('output.createMissingDir must recursively create the missing directories for the given path', t => {
+  t.plan(2);
+
+  try {
+    fs.statSync('/tmp/dir1/dir2/dir3');
+  } catch (e) {
+    t.ok(output.createMissingDir('/tmp/dir1/dir2/dir3'));
+    t.ok(fs.statSync('/tmp/dir1/dir2/dir3'));
+  }
+  fs.rmdirSync('/tmp/dir1/dir2/dir3');
+  fs.rmdirSync('/tmp/dir1/dir2');
+  fs.rmdirSync('/tmp/dir1');
+});
