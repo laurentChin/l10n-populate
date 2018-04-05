@@ -51,7 +51,9 @@ function process(output, l10nSrc, templateSrc, targetPath) {
         );
 
         output.createFile(populatedFilePath, populatedContent)
-          .then(resolve, reject);
+          .then(() => {
+            resolve(l10nFileMap.size * templateFileMap.size);
+          }, reject);
       });
     });
   });
