@@ -53,7 +53,6 @@ function createMissingDir (fs, missingPath) {
 
       if (part !== '') {
         const fullPath = `${parentPath}/${part}`.replace('//', '/');
-        console.log(fullPath);
         parentPath = fullPath;
         try {
           // create the directory only it it doesn't already exists
