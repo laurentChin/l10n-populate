@@ -1,0 +1,3 @@
+# exclude test from npm
+tests
+
