@@ -11,6 +11,8 @@ const inputValidator = require('./src/validators/input');
 const contentValidator = require('./src/validators/content');
 const templateValidator = require('./src/validators/template');
 
+const l10n = require('./src/l10n');
+
 const invalidPathErrorMessage = require('./src/errors/invalidPathErrorMessage');
 
 program
@@ -23,6 +25,8 @@ program
 
 const inputAbsolutePath = path.join(process.env.PWD, program.input);
 const templateAbsolutePath = path.join(process.env.PWD, program.template);
+const targetAbsolutePath = path.join(process.env.PWD, program.output);
+
 const invalidInputErrorMessage = colors.red(invalidPathErrorMessage.generate(program.input));
 const invalidTemplateErrorMessage = colors.red(invalidPathErrorMessage.generate(program.template));
 
@@ -57,3 +61,13 @@ if (!templateValidator.isValid(templateAbsolutePath)) {
   console.log(invalidTemplateErrorMessage);
   process.exit(1);
 }
+
+l10n
+  .process(inputAbsolutePath, templateAbsolutePath, targetAbsolutePath)
+  .then((numberOfFileCreated) => {
+    console.log(colors.green(`${numberOfFileCreated} files have been created`));
+    process.exit(0);
+  })
+  .catch(() => {
+    process.exit(1);
+  });
