@@ -11,11 +11,11 @@ function createFile (fs, target, content) {
   }
 }
 
-function buildPath (filename, targetPath, basePath, subDirectory = '') {
+function buildPath (filename, targetPath, subDirectory = '') {
   if (subDirectory !== '') {
-    return `${basePath}/${targetPath}/${subDirectory}/${filename}`;
+    return `${targetPath}/${subDirectory}/${filename}`;
   } else {
-    return `${basePath}/${targetPath}/${filename}`;
+    return `${targetPath}/${filename}`;
   }
 }
 

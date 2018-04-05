@@ -46,9 +46,9 @@ test(
     t.plan(1);
 
     t.equal(
-      output.buildPath('filename.html', 'target', '/base'),
-      '/base/target/filename.html',
-      'must return \'/base/target/filename.html\''
+      output.buildPath('filename.html', '/target',),
+      '/target/filename.html',
+      'must return \'/target/filename.html\''
     );
   }
 );
@@ -59,9 +59,9 @@ test(
     t.plan(1);
 
     t.equal(
-      output.buildPath('filename.html', 'target', '/base', 'fr'),
-      '/base/target/fr/filename.html',
-      'must return \'/base/target/fr/filename.html\''
+      output.buildPath('filename.html', '/target', 'fr'),
+      '/target/fr/filename.html',
+      'must return \'/target/fr/filename.html\''
     );
   }
 );
