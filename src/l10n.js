@@ -47,7 +47,7 @@ function process(output, l10nSrc, templateSrc, targetPath) {
         const populatedFilePath = output.buildPath(
           templateFilename,
           targetPath,
-          (l10nMap.size > 1) ? l10nFilename.replace('.json', '') : ''
+          (l10nFileMap.size > 1) ? l10nFilename.replace('.json', '') : ''
         );
 
         output.createFile(populatedFilePath, populatedContent)
