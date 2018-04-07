@@ -1,6 +1,6 @@
 {
   "name": "l10n-populate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a node command line tool to inject translation into static files from json",
   "main": "index.js",
   "bin": {
