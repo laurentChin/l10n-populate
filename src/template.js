@@ -11,7 +11,8 @@ function lookup(fs, templateDirectoryPath, templateRootPath = '', previousMap = 
   const files = fs
     .readdirSync(templateDirectoryPath)
     .filter((file) => {
-      return fs.statSync(path.join(templateDirectoryPath, file)).isFile() && isHTML(file);
+      const fileStat = fs.statSync(path.join(templateDirectoryPath, file));
+      return (fileStat.isFile() && isHTML(file)) || fileStat.isDirectory();
     });
 
   files.forEach((file) => {
