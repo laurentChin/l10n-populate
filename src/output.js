@@ -1,4 +1,5 @@
 const fs = require('fs');
+const nodePath = require('path');
 
 function createFile (fs, target, content, retry = true) {
   return new Promise((resolve, reject) => {
@@ -31,9 +32,9 @@ function createFile (fs, target, content, retry = true) {
 
 function buildPath (filename, targetPath, subDirectory = '') {
   if (subDirectory !== '') {
-    return `${targetPath}/${subDirectory}/${filename}`;
+    return nodePath.join(targetPath, subDirectory, filename);
   } else {
-    return `${targetPath}/${filename}`;
+    return nodePath.join(targetPath, filename);
   }
 }
 
@@ -44,7 +45,7 @@ function createMissingDir (fs, missingPath) {
    */
   const relativePath = missingPath.replace(process.env.PWD, '');
 
-  const parts = relativePath.split('/');
+  const parts = relativePath.split(nodePath.sep);
 
   let parentPath = (missingPath.indexOf(process.env.PWD) === 0) ? process.env.PWD : (parts[0] || '/');
 
@@ -52,7 +53,7 @@ function createMissingDir (fs, missingPath) {
     parts.forEach((part) => {
 
       if (part !== '') {
-        const fullPath = `${parentPath}/${part}`.replace('//', '/');
+        const fullPath = nodePath.normalize(nodePath.join(parentPath, part));
         parentPath = fullPath;
         try {
           // create the directory only it it doesn't already exists

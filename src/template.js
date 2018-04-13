@@ -16,7 +16,7 @@ function lookup(fs, templateDirectoryPath, templateRootPath = '', previousMap = 
     });
 
   files.forEach((file) => {
-    const filePath = `${templateDirectoryPath}/${file}`;
+    const filePath = path.join(templateDirectoryPath, file);
     if (fs.statSync(filePath).isDirectory()) {
       map = lookup(fs, filePath, templateRootPath, map);
     } else {

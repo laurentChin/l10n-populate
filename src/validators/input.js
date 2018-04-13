@@ -1,4 +1,5 @@
 const fs = require('fs');
+const nodePath = require('path');
 
 function isValid (path) {
   try {
@@ -17,7 +18,7 @@ function isValid (path) {
       return false;
     }
 
-    if (isJson(path) && !filenameIsRFC3066(extractFilename(path))) {
+    if (isJson(path) && !filenameIsRFC3066(nodePath.basename(path))) {
       return false;
     }
 
@@ -33,10 +34,6 @@ function isJson (filename) {
 
 function filenameIsRFC3066 (filename) {
   return /^[a-z]{2}(-[A-Z]{2,4})?.json$/.test(filename);
-}
-
-function extractFilename (path) {
-  return path.substr(-(path.lastIndexOf('/'), (path.length - path.lastIndexOf('/') - 1)));
 }
 
 module.exports = {

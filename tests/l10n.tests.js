@@ -1,5 +1,6 @@
 const test = require('tape');
 const fs = require('fs');
+const path = require('path');
 
 const l10n = require('../src/l10n');
 
@@ -129,7 +130,7 @@ test('l10n must own a lookup function', t => {
 
 test('l10n.lookup() must return a map containing two values', t => {
   t.plan(4);
-  const lookupResult = l10n.lookup(`${process.env.PWD}/tests/__fixtures__/l10n`);
+  const lookupResult = l10n.lookup(path.join(process.env.PWD, 'tests/__fixtures__/l10n'));
 
   t.equal(
     lookupResult.size,
@@ -172,12 +173,12 @@ test('l10n must own a process method', t => {
   t.ok(l10n.hasOwnProperty('process'));
 });
 
-test('l10n.process must files in a /tmp directory', t => {
+test('l10n.process must create files in a /tmp directory', t => {
   t.plan(1);
 
-  const l10nSrc = `${process.env.PWD}/tests/__fixtures__/l10n`;
-  const templateSrc = `${process.env.PWD}/tests/__fixtures__/templates`;
-  const targetPath = `${process.env.PWD}/tmp`;
+  const l10nSrc = path.join(process.env.PWD, 'tests/__fixtures__/l10n');
+  const templateSrc = path.join(process.env.PWD, 'tests/__fixtures__/templates');
+  const targetPath = path.join(process.env.PWD, 'tmp');
 
   l10n.process(l10nSrc, templateSrc, targetPath)
     .then(() => {
@@ -187,23 +188,23 @@ test('l10n.process must files in a /tmp directory', t => {
         '/tmp/dist must contains three files'
       );
 
-      fs.unlinkSync(`${process.env.PWD}/tmp/fr/page_1.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/fr/page_2.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/fr/sub_level1/page_3.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/fr/sub_level1/sub_level2/page_4.html`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/fr/sub_level1/sub_level2`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/fr/sub_level1`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/fr`);
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/fr/page_1.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/fr/page_2.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/fr/sub_level1/page_3.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/fr/sub_level1/sub_level2/page_4.html'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/fr/sub_level1/sub_level2'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/fr/sub_level1'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/fr'));
 
-      fs.unlinkSync(`${process.env.PWD}/tmp/en/page_1.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/en/page_2.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/en/sub_level1/page_3.html`);
-      fs.unlinkSync(`${process.env.PWD}/tmp/en/sub_level1/sub_level2/page_4.html`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/en/sub_level1/sub_level2`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/en/sub_level1`);
-      fs.rmdirSync(`${process.env.PWD}/tmp/en`);
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/en/page_1.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/en/page_2.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/en/sub_level1/page_3.html'));
+      fs.unlinkSync(path.join(process.env.PWD, 'tmp/en/sub_level1/sub_level2/page_4.html'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/en/sub_level1/sub_level2'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/en/sub_level1'));
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp/en'));
 
-      fs.rmdirSync(`${process.env.PWD}/tmp`);
+      fs.rmdirSync(path.join(process.env.PWD, 'tmp'));
     })
     .catch(() => {
       t.fail('must create a file at the given path');
