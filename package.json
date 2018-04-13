@@ -1,10 +1,10 @@
 {
-  "name": "l10n-populate",
+  "name": "l10n-template",
   "version": "1.0.1",
-  "description": "a node command line tool to inject translation into static files from json",
+  "description": "a node command line tool to inject translations into static files from json",
   "main": "index.js",
   "bin": {
-    "l10n-populate": "./index.js"
+    "l10n-template": "./index.js"
   },
   "scripts": {
     "pretest": "eslint src/**/*.js tests/**/*.js index.js; exit 0;",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/laurentChin/l10n-populate.git"
+    "url": "git+https://github.com/laurentChin/l10n-template.git"
   },
   "keywords": [
     "l10n",
@@ -23,9 +23,9 @@
   "author": "Laurent Janet <laurent.janet@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/laurentChin/l10n-populate/issues"
+    "url": "https://github.com/laurentChin/l10n-template/issues"
   },
-  "homepage": "https://github.com/laurentChin/l10n-populate#readme",
+  "homepage": "https://github.com/laurentChin/l10n-template#readme",
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
     "eslint": "^4.18.0",

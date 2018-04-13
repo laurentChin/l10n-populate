@@ -1,3 +1,3 @@
-# l10n-populate
+# l10n-template
 
 WIP
