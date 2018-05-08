@@ -162,7 +162,7 @@ test('l10n.populate must replace the tokens in the \'source\' argument with the 
   map.set('rootObject.childObject.level2', 'level2 translation');
 
   t.isEqual(
-    l10n.populate('the translation of level1 is {{rootObject.level1}}, the translation of level2 is {{rootObject.childObject.level2}}', map),
+    l10n.populate('the translation of level1 is {{rootObject.level1}}, the translation of level2 is {{ rootObject.childObject.level2 }}', map),
     'the translation of level1 is level1 translation, the translation of level2 is level2 translation',
     'the token {{rootObject.level1}} must be replaced with \'level1 translation\', the token {{rootObject.childObject.level2}} must be replaced with \'level2 translation\''
   );

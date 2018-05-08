@@ -28,7 +28,7 @@ function populate (source, translations) {
   let sourceCopy = source;
 
   translations.forEach((value, key) => {
-    sourceCopy = sourceCopy.replace(new RegExp(`{{${key}}}`, 'g'), value);
+    sourceCopy = sourceCopy.replace(new RegExp(`{{[ ]?${key}[ ]?}}`, 'g'), value);
   });
 
   return sourceCopy;
