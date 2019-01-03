@@ -1,3 +1,6 @@
 # exclude test from npm
 tests
 
+# exclude IntelliJ config
+.idea
+
