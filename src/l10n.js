@@ -24,8 +24,11 @@ function composeKey (currentKey, keyPrefix = '') {
   }
 }
 
-function populate (source, translations) {
+function populate (source, translations, languageCode) {
   let sourceCopy = source;
+
+  // inject current language iso code in "lang" key
+  sourceCopy = sourceCopy.replace(new RegExp('{{[ ]?lang[ ]?}}', 'g'), languageCode);
 
   translations.forEach((value, key) => {
     sourceCopy = sourceCopy.replace(new RegExp(`{{[ ]?${key}[ ]?}}`, 'g'), value);
@@ -41,9 +44,10 @@ function process(output, l10nSrc, templateSrc, targetPath) {
 
   return new Promise((resolve, reject) => {
     l10nFileMap.forEach((l10nContent, l10nFilename) => {
+      const languageCode = l10nFilename.replace(/\.[a-z0-9]{2,}$/, '');
       const l10nMap = buildMap(new Map(), l10nContent);
       templateFileMap.forEach((templateContent, templateFilename) => {
-        const populatedContent = populate(templateContent, l10nMap);
+        const populatedContent = populate(templateContent, l10nMap, languageCode);
         const populatedFilePath = output.buildPath(
           templateFilename,
           targetPath,

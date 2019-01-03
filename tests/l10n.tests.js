@@ -168,6 +168,20 @@ test('l10n.populate must replace the tokens in the \'source\' argument with the 
   );
 });
 
+test('l10n.populate must replace the lang token with the language code processed', t => {
+  t.plan(1);
+
+  const map = new Map();
+  map.set('rootObject.level1', 'level1 translation');
+  map.set('rootObject.childObject.level2', 'level2 translation');
+
+  t.isEqual(
+    l10n.populate('{{ lang }}', map, 'fr'),
+    'fr',
+    'the token {{lang}} must be replaced with \'fr\''
+  );
+});
+
 test('l10n must own a process method', t => {
   t.plan(1);
   t.ok(l10n.hasOwnProperty('process'));
